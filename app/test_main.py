@@ -1,9 +1,9 @@
 import pytest
-from app.main import get_human_age
+from app import main
 
 
 @pytest.mark.parametrize(
-    "cat_age, dog_age, expected_result",
+    "cat_age, dog_age, expected",
     [
         (0, 0, [0, 0]),
         (14, 14, [0, 0]),
@@ -12,14 +12,12 @@ from app.main import get_human_age
         (24, 24, [2, 2]),
         (27, 28, [2, 2]),
         (28, 29, [3, 3]),
+        (28, 28, [3, 2]),
+        (27, 29, [2, 3]),
         (100, 100, [21, 17]),
     ]
 )
-def test_get_human_age(
-        cat_age: int,
-        dog_age: int,
-        expected_result: list) -> None:
-    assert get_human_age(cat_age, dog_age) == expected_result, (
-        f"{cat_age}/{dog_age} cat/dog years should convert "
-        f"into {expected_result} human age."
+def test_get_human_age(cat_age: int, dog_age: int, expected: list) -> None:
+    assert main.get_human_age(cat_age, dog_age) == expected, (
+        f"Expected {expected} for ages {cat_age} and {dog_age}"
     )
